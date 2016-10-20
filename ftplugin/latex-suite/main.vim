@@ -811,12 +811,12 @@ if g:Tex_SmartKeyDot
 			\&& strpart(getline('.'), col('.')-3, 2) == '--' 
 			return "\<bs>\<bs>\\rightarrow"
 		elseif strpart(getline('.'), col('.')-3, 2) == '--' 
-			return "\<bs>\<bs>$\\rightarrow$"
+			return "\<bs>\<bs>$\\rightarrow$ "
 		elseif synIDattr(synID(line('.'),col('.')-1,0),"name") =~ '^texMath'
 			\&& strpart(getline('.'), col('.')-3, 2) == '==' 
 			return "\<bs>\<bs>\\Rightarrow"
 		elseif strpart(getline('.'), col('.')-3, 2) == '==' 
-			return "\<bs>\<bs>$\\Rightarrow$"
+			return "\<bs>\<bs>$\\Rightarrow$ "
 		else
 			return '>'
 		endif
@@ -824,9 +824,9 @@ if g:Tex_SmartKeyDot
 	function! <SID>SmartBox()
 		if synIDattr(synID(line('.'),col('.')-1,0),"name") =~ '^texMath'
 			\&& strpart(getline('.'), col('.')-2, 1) == '#' 
-			return "\<bs>\<bs>\\rightarrow"
+			return "\<bs>\\Box"
 		elseif strpart(getline('.'), col('.')-2, 1) == '#' 
-			return "\<bs>\<bs>$\\rightarrow$"
+			return "\<bs>$\\Box$ "
 		else
 			return '#'
 		endif
