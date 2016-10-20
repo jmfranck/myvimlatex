@@ -52,8 +52,7 @@ if !exists('s:doneMappings')
 	call IMAP ('{}', '{<++>}<++>', "tex")
 	call IMAP ('^^', '^{<++>}<++>', "tex")
 	call IMAP ('$$', '$<++>$<++>', "tex")
-	call IMAP ('==', '&= ', "tex")
-	call IMAP ('~~', '&\approx ', "tex")
+	call IMAP ('~~', '\sim', "tex")
 	call IMAP ('=~', '\approx', "tex")
 	call IMAP ('::', '\dots', "tex")
 	call IMAP ('((', '\left( <++> \right)<++>', "tex")
@@ -110,7 +109,6 @@ if !exists('s:doneMappings')
 	call IMAP(g:Tex_Leader.'u', '\upsilon', 'tex')
 	call IMAP(g:Tex_Leader.'v', '\varsigma', 'tex')
 	call IMAP(g:Tex_Leader.'w', '\omega', 'tex')
-	call IMAP(g:Tex_Leader.'w', '\wedge', 'tex')  " AUCTEX style
 	call IMAP(g:Tex_Leader.'x', '\xi', 'tex')
 	call IMAP(g:Tex_Leader.'y', '\psi', 'tex')
 	call IMAP(g:Tex_Leader.'z', '\zeta', 'tex')
@@ -808,6 +806,21 @@ if g:Tex_SmartKeyDot
 			return '.'
 		endif
 	endfunction 
+	function! <SID>SmartArrow()
+		if synIDattr(synID(line('.'),col('.')-1,0),"name") =~ '^texMath'
+			\&& strpart(getline('.'), col('.')-3, 2) == '--' 
+			return "\<bs>\<bs>\\rightarrow"
+		elseif strpart(getline('.'), col('.')-3, 2) == '--' 
+			return "\<bs>\<bs>$\\rightarrow$"
+		elseif synIDattr(synID(line('.'),col('.')-1,0),"name") =~ '^texMath'
+			\&& strpart(getline('.'), col('.')-3, 2) == '==' 
+			return "\<bs>\<bs>\\Rightarrow"
+		elseif strpart(getline('.'), col('.')-3, 2) == '==' 
+			return "\<bs>\<bs>$\\Rightarrow$"
+		else
+			return '>'
+		endif
+	endfunction 
 
 endif
 " }}}
@@ -888,6 +901,7 @@ function! <SID>SetTeXOptions()
 	endif
 	if g:Tex_SmartKeyDot
 		inoremap <buffer> <silent> . <C-R>=<SID>SmartDots()<CR>
+		inoremap <buffer> <silent> > <C-R>=<SID>SmartArrow()<CR>
 	endif
 
 	" This line seems to be necessary to source our compiler/tex.vim file.
