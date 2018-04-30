@@ -819,7 +819,7 @@ if g:Tex_SmartKeyDot
 			return "\<bs>\<bs>$\\Rightarrow$ "
 		elseif synIDattr(synID(line('.'),col('.')-1,0),"name") =~ '^texMath'
 			\&& strpart(getline('.'), col('.')-2, 1) == '<' 
-			return "\<bs>\\left\\langle <++> \\right\\rangle\<Esc>30h"
+			return "\<bs>\\left\\langle <++> \\right\\rangle<++>\<Esc>35h"
 		else
 			return '>'
 		endif
