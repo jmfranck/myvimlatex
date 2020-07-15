@@ -181,7 +181,7 @@ function! IMAP(lhs, rhs, ft, ...)
 
 	" map only the last character of the left-hand side.
 	if lastLHSChar == ' '
-		for lastLHSChar in ['<space>', '<s-space>', '<c-space>', '<cs-space>']
+		for lastLHSChar in ['<space>', '<s-space>', '<cs-space>']
 			exe 'inoremap <silent>'
 						\ escape(lastLHSChar, '|')
 						\ '<C-r>=<SID>LookupCharacter("' .
